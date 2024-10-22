@@ -392,12 +392,12 @@ experiment traffic_change type:gui {
 	output {
 		display city_display type:3d{
 			species road aspect:base;
-			//species building aspect:base;
+			species building aspect:base;
 			species intersection aspect:base;
-			//species normalcar aspect:base;
-			//species mobcar aspect:base;
-			//species residence_car aspect:base;
-			//species intersection;
+			species normalcar aspect:base;
+			species mobcar aspect:base;
+			species residence_car aspect:base;
+			species intersection;
 			overlay position:{0,0} size:{200,100} background:#grey transparency:0.2 border:#black rounded:true {
 				draw "時計" font:font("Helvetica", 20,#bold) at:{10,30} color:#black;
 				draw string(current_date.year)+'/'+string(current_date.month)+'/'+string(current_date.day) font:font("Helvetica",20,#bold) at:{10,60} color:#black;
@@ -418,4 +418,5 @@ experiment traffic_change type:gui {
 	}
 	
 }
+//git/2024/10/22/14:33
 
