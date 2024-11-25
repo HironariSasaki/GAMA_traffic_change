@@ -21,6 +21,7 @@ import 'Residence_car.gaml'
 import 'Mobcar.gaml'
 import 'Random_car.gaml'
 import 'Test.gaml'
+import 'Network.gaml'
 
 
 global {
@@ -42,9 +43,10 @@ global {
 	
 	
 	init {
-		write shop_id;
-		write no_signal_id;
-		write signal_id;
+//		write shop_id;
+//		write no_signal_id;
+//		write signal_id;
+		create NetworkAgent;
 		create road from:shape_file_road with:[
 			road_id::int(read("road_id")),
 			p_lane_r::int(read("planesu")),
@@ -72,7 +74,7 @@ global {
 					self.m_lane_r <- myself.m_lane_r;
 					self.linked_road <- myself;
 					myself.linked_road <- self;
-					self.road_id <- myself.road_id;
+					self.road_id <- myself.road_id ;
 					self.length <- myself.length;
 					self.current_ave_sp <- myself.current_ave_sp;
 				}
@@ -97,7 +99,11 @@ global {
 
 		
 		road_network <- as_driving_graph(road, intersection);
-		
+		write road_network;
+	
+		write road where (each.road_id=135);
+		write intersection(15).node_id;
+		write intersection(28).node_id;
 		ask intersection {
 			
 			if length(roads_in)=0 and length(self.roads_out)=0 {
@@ -132,7 +138,7 @@ global {
 			//stop << []; //この空のリストをstopに代入しないとjavaエラー
 		}
 		//do die;
-		
+		road153 <- one_of(road where (each.road_id = 153));
 		
 		
 
@@ -305,9 +311,9 @@ global {
 	
 	reflex when:cycle=10{
 		ask intersection where (each.node_id=37){
-			write roads_in;
+			//write roads_in;
 			loop i over:roads_in{
-				write road(i).road_id;
+				//write road(i).road_id;
 			}
 		}
 	}
@@ -334,7 +340,7 @@ global {
 
 	reflex when:cycle=100{
 		ask intersection where (each.node_id = 16){
-			write signal_type;
+			//write signal_type;
 		}
 	}
 	
@@ -379,8 +385,15 @@ global {
 			
 		}
 	}
+//	reflex when:every(100#cycle){
+//		write "test:"+string(road153);
+//		ask road where(each.road_id = 135){
+//			write current_car_num;
+//			write length(all_agents);
+//		}
+//	}
 
-	
+
 	
 	
 }//globalここまで
@@ -408,15 +421,21 @@ experiment traffic_change type:gui {
 			}
 		}
 		
-			display chart_display refresh: every(10#cycles) type: 2d{
-			chart "customers_num" type: series size: {1,1} position: {10,10}{
-				
-				loop i over:shop_building{
-					data string(i) value:i.human_num color:i.color marker:false;
-				}
-			
-				}
-			}
+//			display chart_display refresh: every(10#cycles) type: 2d{
+//			chart "customers_num" type: series size: {1,1} position: {10,10}{
+//				
+//				loop i over:shop_building{
+//					data string(i) value:i.human_num color:i.color marker:false;
+//				}
+//			
+//				}
+//			}
+
+//			display char_display refresh: every(5 #cycles) type: 2d{
+//				chart "road153 car num" type: series size: {1,1} position: {10,10}{
+//					data "road153" value:road153.all_car_num color:#red marker:false;
+//				}
+//			}
 		
 	}
 	

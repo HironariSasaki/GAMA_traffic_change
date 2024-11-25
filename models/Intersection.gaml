@@ -124,7 +124,9 @@ species intersection skills:[intersection_skill] parallel:true{
 	
 	aspect base {
 		//draw circle(node_size) at:location color:node_color border:false; // aspectは名前を指定しているもの
-		draw string(node_id) color:#black;
+		if node_id_on = true {
+			draw string(node_id) color:#black;
+		}
 		if (is_traffic_signal) {
 			if (length(v_roads_in) = 4) {
 				draw sphere(2 #m) at: signal_locations[0] color: is_blue ? #green : #red;

@@ -68,8 +68,9 @@ species residence_car parent:vehicle {
 				current_date.minute = 0 and 
 				current_date.second = 10 {
 					
-			go_hour <- rnd(14,16,1);
-			go_minute <- rnd(0,59,1);
+			//go_hour <- rnd(14,16,1);
+			go_hour <- 13;
+			go_minute <- rnd(1,59,1);
 			go_second <- rnd(0,59,1);
 
 			int shop_num <- length(sorted_shop);
@@ -207,6 +208,7 @@ species residence_car parent:vehicle {
 			//write myself.drived_speed;
 			speed_sum <- speed_sum + myself.drived_speed;
 			car_num <- car_num + 1;
+			all_car_num <- all_car_num + 1;
 		}
 		//write drived_speed;
 		start_time <- time;

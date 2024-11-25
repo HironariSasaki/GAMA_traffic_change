@@ -95,6 +95,8 @@ species normalcar parent:vehicle {
 		drived <- current_road;	
 	}
 	
+	
+	
 	reflex drived_info when: drive_ov = true and drived != nil and current_road != drived{
 		
 		end_time <- time-start_time ;
@@ -102,6 +104,7 @@ species normalcar parent:vehicle {
 			myself.drived_speed <-((length/myself.end_time)*3.6) with_precision 3;
 			speed_sum <- speed_sum + myself.drived_speed;
 			car_num <- car_num + 1;
+			all_car_num <- all_car_num + 1;
 		}
 		start_time <- time;
 		drived <- current_road;

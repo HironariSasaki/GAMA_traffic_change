@@ -34,6 +34,12 @@ global {
 	
 	graph road_network;
 	
+	bool node_id_on <- true;
+	bool road_id_on <- true;
+	
+	road road153 ;
+	int road_current_car_num<-0;	
+	
 	intersection no5;
 	intersection no12;
 	
