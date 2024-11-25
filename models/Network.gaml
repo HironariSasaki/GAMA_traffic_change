@@ -61,29 +61,65 @@ species NetworkAgent skills:[network]{
 //		}
 //	}
 
+	//ubuntu用
 	reflex get_message when:every(10 #second){
 		loop while: has_more_message() {
 			message mess <- fetch_message();
-			map body <- mess.contents['BODY'];
+			//map<string,unknown> body <- from_json(mess.contents['BODY']);
+			map body <- from_json(mess.contents['BODY']);
 			if body['status'] = 'road_info'{
+				
 				int click_road_id <- int(body['road_info']['road_id']);
 				//write click_road_id;
+				//write 'current_num:'+string(current_num);
 				if current_num != click_road_id{
+					//write 'df';
 					current_num <- click_road_id;
 					ask road where (each.road_id = current_num){
 						myself.road_info <- string(car_num_manage);
 						ask NetworkAgent{
 							do send to:"/road_info_gama" contents:["POST",string(current_num)+":"+string(road_info)];
+							
 						}
-						write string(current_num)+string(car_num_manage);
+						write string(current_num)+':'+string(car_num_manage);
 					}
 					//2つのリストの内下のリストしか送られない
 					//do send to:"/road_info_gama" contents:["POST",string(current_num)+":"+string(road_info)];
+				}
+				else if current_num = click_road_id{
+					//write 'eq';
 				}
 			}
 			
 		}
 	}
+	
+	//Windowsはこっちで問題ない。ubuntuだとmapのところでおかしくなる
+//	reflex get_message when:every(10 #second){
+//		loop while: has_more_message() {
+//			message mess <- fetch_message();
+//			map body <- mess.contents['BODY'];
+//			if body['status'] = 'road_info'{
+//				write 'ok';
+//				int click_road_id <- int(body['road_info']['road_id']);
+//				write click_road_id;
+//				if current_num != click_road_id{
+//					current_num <- click_road_id;
+//					ask road where (each.road_id = current_num){
+//						myself.road_info <- string(car_num_manage);
+//						ask NetworkAgent{
+//							do send to:"/road_info_gama" contents:["POST",string(current_num)+":"+string(road_info)];
+//						}
+//						write string(current_num)+string(car_num_manage);
+//					}
+//					//2つのリストの内下のリストしか送られない
+//					//do send to:"/road_info_gama" contents:["POST",string(current_num)+":"+string(road_info)];
+//				}
+//			}
+//			
+//		}
+//	}
+	
 }
 
 //message[sender: HTTP; content: {CODE=200, HEADERS={connection=[close], content-length=[31], content-type=[application/json], date=[Thu, 21 Nov 2024 02:35:02 GMT], server=[Werkzeug/2.3.4 Python/3.11.3]}, BODY={status=success_gama}}]
